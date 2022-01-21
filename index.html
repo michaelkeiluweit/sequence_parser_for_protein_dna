@@ -1,0 +1,82 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Sequence parser for protein and DNA.">
+    <meta name="author" content="Michael Keiluweit">
+
+    <!--
+    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    -->
+
+    <title>DNA Sequence</title>
+
+    <style>
+
+        body {
+            width: 100%;
+            font-family: monospace;
+        }
+
+        input{
+            text-align:center;
+            font-family: monospace;
+        }
+
+        h1 {
+            font-size: 3em;
+            text-align: center;
+        }
+
+        #sequence_input {
+            font-size: 1.5em;
+            width: 1000px;
+        }
+
+        #result {
+            padding-top: 2em;
+            text-align: left;
+            width: 508px;
+        }
+
+        .container {
+            width: 100%;
+        }
+
+        .center-block {
+            margin: auto;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Sequence parser for protein and DNA</h1>
+
+    <div class="container">
+        <input type="text" id="sequence_input" class="center-block" placeholder="amino-acid code">
+    </div>
+
+    <div class="container">
+        <span id="result" class="center-block"></span>
+    </div>
+
+    <script>
+        document.getElementById("sequence_input").addEventListener("input", (event) => {
+            const sequence = event.target.value.replace(/[^a-z]/gi, '');
+            const parts = sequence.match(/.{1,10}/g);
+
+            if (parts !== null && parts.length > 0) {
+                document.getElementById("result").innerText = parts.join(" ").replace(/(.{66})/g,"$&\n");
+            } else {
+                document.getElementById("result").innerText = "";
+            }
+        });
+    </script>
+</body>
+</html>
