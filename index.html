@@ -68,7 +68,7 @@
 
     <script>
         document.getElementById("sequence_input").addEventListener("input", (event) => {
-            const sequence = event.target.value.replace(/[^a-z]/gi, '');
+            const sequence = event.target.value.replace(/[^a-z]/gi, "");
             const parts = sequence.match(/.{1,10}/g);
 
             if (parts !== null && parts.length > 0) {
