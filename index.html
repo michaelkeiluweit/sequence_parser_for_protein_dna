@@ -6,17 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="Sequence parser for protein and DNA.">
     <meta name="author" content="Michael Keiluweit">
-
-    <!--
-    <link rel="icon" href="/favicon.ico">
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    -->
-
+    
     <title>DNA Sequence</title>
 
     <style>
-
         body {
             width: 100%;
             font-family: monospace;
@@ -40,7 +33,7 @@
         #result {
             padding-top: 2em;
             text-align: left;
-            width: 508px;
+            width: 520px;
         }
 
         .container {
@@ -56,27 +49,43 @@
 
 <body>
 
-    <h1>Sequence parser for protein and DNA</h1>
+<h1>Sequence parser for protein and DNA</h1>
 
-    <div class="container">
-        <input type="text" id="sequence_input" class="center-block" placeholder="amino-acid code">
-    </div>
+<div class="container">
+    <input type="text" id="sequence_input" class="center-block" placeholder="amino-acid code">
+</div>
 
-    <div class="container">
-        <span id="result" class="center-block"></span>
-    </div>
+<div class="container">
+    <ol id="result" class="center-block" ></ol>
+</div>
 
-    <script>
-        document.getElementById("sequence_input").addEventListener("input", (event) => {
-            const sequence = event.target.value.replace(/[^a-z]/gi, "");
-            const parts = sequence.match(/.{1,10}/g);
+<script>
+    document.getElementById("sequence_input").addEventListener("input", (event) => {
 
-            if (parts !== null && parts.length > 0) {
-                document.getElementById("result").innerText = parts.join(" ").replace(/(.{66})/g,"$&\n");
-            } else {
-                document.getElementById("result").innerText = "";
+        const parts = event.target.value.replace(/[^a-z]/gi, "").match(/.{1,10}/g);
+
+        if (parts !== null && parts.length > 0) {
+
+            const ol = document.getElementById("result");
+            let text = "";
+            let counter = 1;
+
+            for (let i = 0; i < parts.length; i++) {
+
+                if (counter % 7 !== 0) {
+                    text += parts[i] + " ";
+                } else {
+                    let li = document.createElement("li");
+                    li.appendChild(document.createTextNode(text));
+                    ol.appendChild(li);
+
+                    counter = 0;
+                    text = "";
+                }
+                counter++;
             }
-        });
-    </script>
+        }
+    });
+</script>
 </body>
 </html>
